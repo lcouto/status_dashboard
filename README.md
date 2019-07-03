@@ -26,6 +26,7 @@ Then Dockerize the apps and push to the gcr
 `gcloud docker -- push gcr.io/${PROJECT_ID}/mac_bot_b:v1`
 
 deploy the apps to your gcp environment.
+note, update the image tag in the yaml file with your PROJECT docker tag
 `kubectl apply -f status_dashboard.yaml`
 
 `kubectl get service status-dashboard`
