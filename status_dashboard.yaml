@@ -84,10 +84,10 @@ spec:
         resources:
           limits:
             memory: "5Mi"
-            cpu: "1M"
+            cpu: "1m"
           requests:
             memory: "5Mi"
-            cpu: "1M"
+            cpu: "1m"
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -109,7 +109,7 @@ spec:
         resources:
           limits:
             memory: "5Mi"
-            cpu: "1M"
+            cpu: "1m"
           requests:
             memory: "5Mi"
-            cpu: "1M"
+            cpu: "1m"
