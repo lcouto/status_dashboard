@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<table width="400">
+    <tr>
+            <th align="left">mac</th>
+            <th align="left">epoch time</th>
+    </tr>
+    {% for k, v in devices.items() %}
+            <tr>
+                  <td >{{ k }}</td>
+                  {% if (time - v|int) > 60 %}
+                     <td bgcolor="red">{{ v }}</td>
+                  {% else %}
+                     <td bgcolor="green">{{ v }}</td>
+                  {% endif %}
+            </tr>
+    {% endfor %}
+</table>
+</html>

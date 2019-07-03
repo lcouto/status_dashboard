@@ -1,0 +1,121 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: status-dashboard
+  labels:
+    app: status-dashboard
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: status-dashboard
+    spec:
+      containers:
+      - name: status-dashboard
+        image: "gcr.io/wood320/status-dashboard:v1"
+        imagePullPolicy: Always
+        # env:
+        # - name: REDISHOST
+        #   valueFrom:
+        #     configMapKeyRef:
+        #       name: redishost
+        #       key: REDISHOST
+        ports:
+        - name: http
+          containerPort: 8080
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: "redis"
+        ports:
+        - name: http
+          containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: status-dashboard
+spec:
+  type: LoadBalancer
+  selector:
+    app: status-dashboard
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+
+apiVersion: v1
+kind: Service
+metadata:
+    name: redis
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+  selector:
+    app: redis
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mac-bot-a
+  labels:
+    app: mac-bot-a
+spec:
+  replicas: 0
+  template:
+    metadata:
+      labels:
+        app: mac-bot-a
+    spec:
+      containers:
+      - name: mac-bot-a
+        image: "gcr.io/wood320/mac_bot_a:v1"
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "5Mi"
+            cpu: "500k"
+          requests:
+            memory: "5Mi"
+            cpu: "500k"
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mac-bot-b
+  labels:
+    app: mac-bot-b
+spec:
+  replicas: 0
+  template:
+    metadata:
+      labels:
+        app: mac-bot-b
+    spec:
+      containers:
+      - name: mac-bot-b
+        image: "gcr.io/wood320/mac_bot_b:v1"
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "5Mi"
+            cpu: "500k"
+          requests:
+            memory: "5Mi"
+            cpu: "500k"

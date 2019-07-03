@@ -1,0 +1,4 @@
+FROM alpine:3.8
+RUN apk add --no-cache curl openrc --no-cache
+COPY        ./files/entrypoint_a.sh /
+ENTRYPOINT  ["/entrypoint_a.sh"]
