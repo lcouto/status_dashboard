@@ -1,21 +1,32 @@
 # status_dashboard
 
-This assumes you have a gcloud account and terraform12 installed.
+This assumes you have a kubectl, a gcloud account and terraform12 installed.
 
-First deploy terraform environment. cd in terraform directory, set vars and make plan, make apply
+kubectl - brew install kubernetes-cli
+gcloud - https://cloud.google.com/sdk/
+terraform12 - https://learn.hashicorp.com/terraform/getting-started/install.html
 
-Dockerize the apps
-export PROJECT_ID="$(gcloud config get-value project -q)"
-docker build -t gcr.io/${PROJECT_ID}/status-dashboard:v1 .
-gcloud docker -- push gcr.io/${PROJECT_ID}/status-dashboard:v1
+First deploy the terraform environment. cd into terraform directory, set vars and 
+`make plan`
+`make apply`
 
-docker build -f Dockerfile.botsA -t gcr.io/${PROJECT_ID}/mac_bot_a:v1 .
-gcloud docker -- push gcr.io/${PROJECT_ID}/mac_bot_a:v1
+Set your gcp project: `gcloud config set project [PROJECT_ID]`
+Get Kubernetes creds: `gcloud container clusters get-credentials`
 
-docker build -f Dockerfile.botsB -t gcr.io/${PROJECT_ID}/mac_bot_b:v1 .
-gcloud docker -- push gcr.io/${PROJECT_ID}/mac_bot_b:v1
 
-kubectl apply -f status_dashboard.yaml
+Then Dockerize the apps and push to the gcr
+`export PROJECT_ID="$(gcloud config get-value project -q)"`
+`docker build -t gcr.io/${PROJECT_ID}/status-dashboard:v1 .`
+`gcloud docker -- push gcr.io/${PROJECT_ID}/status-dashboard:v1`
 
-kubectl get service status-dashboard
+`docker build -f Dockerfile.botsA -t gcr.io/${PROJECT_ID}/mac_bot_a:v1 .`
+`gcloud docker -- push gcr.io/${PROJECT_ID}/mac_bot_a:v1`
+
+`docker build -f Dockerfile.botsB -t gcr.io/${PROJECT_ID}/mac_bot_b:v1 .`
+`gcloud docker -- push gcr.io/${PROJECT_ID}/mac_bot_b:v1`
+
+deploy the apps to your gcp environment.
+`kubectl apply -f status_dashboard.yaml`
+
+`kubectl get service status-dashboard`
 endpoint is {{service ip}}/status
