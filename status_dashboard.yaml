@@ -15,12 +15,6 @@ spec:
       - name: status-dashboard
         image: "gcr.io/wood320/status-dashboard:v1"
         imagePullPolicy: Always
-        # env:
-        # - name: REDISHOST
-        #   valueFrom:
-        #     configMapKeyRef:
-        #       name: redishost
-        #       key: REDISHOST
         ports:
         - name: http
           containerPort: 8080
