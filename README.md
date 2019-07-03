@@ -11,7 +11,7 @@ First deploy the terraform environment. cd into terraform directory, set vars an
 `make apply`
 
 Set your gcp project: `gcloud config set project [PROJECT_ID]`
-Get Kubernetes creds: `gcloud container clusters get-credentials`
+Get Kubernetes creds: `gcloud container clusters get-credentials [cluster-name] --region [region]`
 
 
 Then Dockerize the apps and push to the gcr
