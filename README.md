@@ -1,4 +1,5 @@
 # status_dashboard
+This app reports and listens for mac addresses and last check in time.
 
 This assumes you have a kubectl, a gcloud account and terraform12 installed.
 
